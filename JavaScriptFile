@@ -1,0 +1,88 @@
+import wixWindow from 'wix-window';
+
+$w.onReady( function () { 
+$w("#dynamicDataset").onReady( () => {//inseatd of "dataset1" use your dataset property id
+
+$w('#listRepeater').forEachItem( ($w, item, index) =>{
+
+let pageTitle = item.title;	
+let pageContent = item.content;
+let pageContent1 = item.content1;
+
+if((typeof pageTitle !== "undefined") && (typeof pageContent !== "undefined") && (typeof pageContent1 !== "undefined") ){
+let titleColor= item.titleColor;
+let titleFont = item.titleFont;
+
+let contentColor = item.contentColor;
+let contentFont = item.contentFont; 
+let bgColor = item.bgColor;
+let glow = item.glow;
+let bgImage = item.image;
+if(typeof bgImage !== 'undefined'){
+if(bgImage.substr(0,4) !== 'http'){ 
+bgImage = bgImage.replace('wix:image://v1/','');
+bgImage = 'https://static.wixstatic.com/media/'+bgImage.substr(0, bgImage.indexOf('/'));
+}
+}
+
+let width = item.width;
+if(typeof width === 'undefined' ) width = "48%";
+let bgSize = (parseInt(width.substr(0,2),10)+2)+'%';
+
+//$w('#image').hide();
+
+let pageTitle1 = item.title1;
+let titleColor1= item.titleColor1;
+let titleFont1 = item.titleFont1;
+
+let contentColor1 = item.content1Color;
+let contentFont1 = item.content1Font; 
+let bgColor1 = item.content1BgColor;
+let width1 = item.width1;
+if(typeof width1 === 'undefined' ) width1 = "48%";
+let bgSize1 = (parseInt(width1.substr(0,2),10)+2)+'%';
+let glow1 = item.glow1; 
+let bgImage1 = item.image1;
+if(typeof bgImage1 !== 'undefined'){
+if(bgImage1.substr(0,4) !== 'http'){ 
+bgImage1 = bgImage1.replace('wix:image://v1/','');
+bgImage1 = 'https://static.wixstatic.com/media/'+bgImage1.substr(0, bgImage1.indexOf('/'));
+}
+}
+if(typeof pageContent !== 'undefined'){
+   pageContent = pageContent.replace(/class="font_8"/g,`style='color:`+contentColor+` !important;font-family:`+contentFont+` !important;'`);
+}
+if(typeof pageContent1 !== 'undefined'){
+   pageContent1 = pageContent1.replace(/class="font_8"/g,`style='color:`+contentColor1+` !important;font-family:`+contentFont1+` !important;'`);
+}
+if(wixWindow.formFactor === "Mobile"){
+	if(width1 === '0%'){
+	$w("#text12").html = `<div style="display: table;width:100%;"><div style="text-shadow: 0 0 10px ${glow};background-image:url(${bgImage});background-size: 100%;background-color:${bgColor} !important;width:98% !important;display:table-cell; height: auto; overflow: hidden ;padding:1%;"><h1 style="line-height:1em"><span style="font-weight:bold"><span style="color:${titleColor}"><span style="font-family:${titleFont}">${pageTitle}</span></span></span></h1><div style="color:${contentColor} !important; font-family:${contentFont} !important;">${pageContent}</div></div>`;
+	}else if(typeof pageTitle1 === 'undefined'){
+	$w("#text12").html = `<div style="display: table;width:100%;"><div style="text-shadow: 0 0 10px ${glow};background-image:url(${bgImage});background-size: 100%;background-color:${bgColor} !important;width:98% !important;display:table-cell; height: auto; overflow: hidden ;padding:1%;"><h1 style="line-height:1em"><span style="font-weight:bold"><span style="color:${titleColor}"><span style="font-family:${titleFont}">${pageTitle}</span></span></span></h1><div style="color:${contentColor} !important; font-family:${contentFont} !important;">${pageContent}</div></div></div><div style="display: table;width:100%;"><div style="text-shadow: 0 0 10px ${glow1};background-image:url(${bgImage1});background-size: 100%;background-color:${bgColor1} !important;width:98% !important;display:table-cell; height: auto; overflow: hidden ;padding:1%;"><div style="color:${contentColor1} !important;font-family:${contentFont1} !important;">${pageContent1}</div></div></div>`;
+	}else{
+	$w("#text12").html = `<div style="display: table;width:100%;"><div style="text-shadow: 0 0 10px ${glow};background-image:url(${bgImage});background-size: 100%;background-color:${bgColor} !important;width:98% !important;display:table-cell; height: auto; overflow: hidden ;padding:1%;"><h1 style="line-height:1em"><span style="font-weight:bold"><span style="color:${titleColor}"><span style="font-family:${titleFont}">${pageTitle}</span></span></span></h1><div style="color:${contentColor} !important; font-family:${contentFont} !important;">${pageContent}</div></div></div><div style="display: table;width:100%;"><div style="text-shadow: 0 0 10px ${glow1};background-image:url(${bgImage1});background-size: 100%;background-color:${bgColor1} !important;width:98% !important;display:table-cell; height: auto; overflow: hidden ;padding:1%;"><h1 style="line-height:1em"><span style="font-weight:bold"><span style="color:${titleColor1}"><span style="font-family:${titleFont1};">${pageTitle1}</span></span></span></h1><div style="color:${contentColor1} !important;font-family:${contentFont1} !important;">${pageContent1}</div></div></div>`;
+	}
+	
+}else{
+	if(width1 === '0%'){
+	$w("#text12").html = `<div style="display: table;width:100%;"><div style="text-shadow: 0 0 10px ${glow};background-image:url(${bgImage});background-size: 100%;background-color:${bgColor} !important;width:${width} !important;display:table-cell; height: auto; overflow: hidden ;padding:1%;"><h1 style="line-height:1em"><span style="font-weight:bold"><span style="color:${titleColor}"><span style="font-family:${titleFont}">${pageTitle}</span></span></span></h1><div style="color:${contentColor} !important; font-family:${contentFont} !important;">${pageContent}</div></div>`;
+	}else if(typeof pageTitle1 === 'undefined'){
+	$w("#text12").html = `<div style="display: table;width:100%;"><div style="text-shadow: 0 0 10px ${glow};background-image:url(${bgImage});background-size: 100%;background-color:${bgColor} !important;width:${width} !important;display:table-cell; height: auto; overflow: hidden ;padding:1%;"><h1 style="line-height:1em"><span style="font-weight:bold"><span style="color:${titleColor}"><span style="font-family:${titleFont}">${pageTitle}</span></span></span></h1><div style="color:${contentColor} !important; font-family:${contentFont} !important;">${pageContent}</div></div><div style="text-shadow: 0 0 10px ${glow1};background-image:url(${bgImage1});background-size: 100%;background-color:${bgColor1} !important;width:${width1} !important;display:table-cell; height: auto; overflow: hidden ;padding:1%;"><div style="color:${contentColor1} !important;font-family:${contentFont1} !important;">${pageContent1}</div></div></div>`;
+	}else{
+	$w("#text12").html = `<div style="display: table;width:100%;"><div style="text-shadow: 0 0 10px ${glow};background-image:url(${bgImage});background-size: 100%;background-color:${bgColor} !important;width:${width} !important;display:table-cell; height: auto; overflow: hidden ;padding:1%;"><h1 style="line-height:1em"><span style="font-weight:bold"><span style="color:${titleColor}"><span style="font-family:${titleFont}">${pageTitle}</span></span></span></h1><div style="color:${contentColor} !important; font-family:${contentFont} !important;">${pageContent}</div></div><div style="text-shadow: 0 0 10px ${glow1};background-image:url(${bgImage1});background-size: 100%;background-color:${bgColor1} !important;width:${width1} !important;display:table-cell; height: auto; overflow: hidden ;padding:1%;"><h1 style="line-height:1em"><span style="font-weight:bold"><span style="color:${titleColor1}"><span style="font-family:${titleFont1};">${pageTitle1}</span></span></span></h1><div style="color:${contentColor1} !important;font-family:${contentFont1} !important;">${pageContent1}</div></div></div>`;
+	}
+}
+// $w("#text12").html = ''+bgImage;
+//	show_Repeater();
+ if($w("#listRepeter").hidden){
+ 	$w("#listRepeter").show();
+ }
+}else{
+	$w("#container1").collapse();
+}
+});
+}); 
+
+
+} ) ;
